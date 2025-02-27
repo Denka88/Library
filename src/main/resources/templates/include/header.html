@@ -9,18 +9,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Главная</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Контакты</a>
-                </li>
 
             </ul>
 
             <ul class="navbar-nav me-3" sec:authorize="isAuthenticated()">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">User</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/">Home</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" th:href="@{/profile}" role="button" th:text="${user.username}"></a>
                 </li>
             </ul>
 
@@ -30,15 +24,12 @@
 
             <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
                 <li class="nav-item ms-2">
-                    <a href="/register" class="btn btn-outline-primary">Зарегестрироваться</a>
+                    <a href="/registration" class="btn btn-outline-primary">Зарегестрироваться</a>
                 </li>
                 <li class="nav-item ms-2">
                     <a href="/login" class="btn btn-primary">Войти</a>
                 </li>
             </ul>
-
-
-
         </div>
     </div>
 </nav>

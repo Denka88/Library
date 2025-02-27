@@ -11,13 +11,8 @@
 <div th:replace="~{include/header}"></div>
 
 <h1 class="text-center">Электронная библиотека</h1>
-<a href="/registration">REG</a>
-<a href="/login">LOG</a>
-<form method="post" th:action="@{/logout}">
-    <input class="btn btn-danger" type="submit" value="Выход"/>
-</form>
-<h5>Ваше имя:</h5>
-<p class="fw-normal fs-6" th:text="${user.username}" sec:authorize="isAuthenticated()"></p>
+<h5 class="text-center">Ваше имя:</h5>
+<p class="fw-normal fs-6 text-center" th:text="${user.username}" sec:authorize="isAuthenticated()"></p>
 </div>
 </body>
 </html>
