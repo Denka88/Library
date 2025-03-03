@@ -4,7 +4,6 @@ import com.example.library.dto.UserDto;
 import com.example.library.model.Role;
 import com.example.library.model.User;
 import com.example.library.repo.UserRepo;
-
 import com.example.library.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,5 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUser(String username) {
         return userRepo.findByUsername(username);
+    }
+
+    @Override
+    public boolean isUsernameAvailable(String username) {
+        return userRepo.existsByUsername(username);
     }
 }

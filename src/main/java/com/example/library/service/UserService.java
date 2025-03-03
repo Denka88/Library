@@ -8,5 +8,6 @@ public interface UserService {
     
     void save(UserDto userdto);
     User findUser(String username);
-    
+
+    boolean isUsernameAvailable(String username);
 }
