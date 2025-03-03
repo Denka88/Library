@@ -1,6 +1,7 @@
 package com.example.library.controller;
 
 import com.example.library.dto.UserDto;
+import com.example.library.impl.BookServiceImpl;
 import com.example.library.impl.UserServiceImpl;
 import com.example.library.service.UserService;
 import jakarta.validation.Valid;
@@ -19,11 +20,13 @@ public class UserController {
 
     private final UserService userService;
     private final UserServiceImpl userServiceImpl;
+    private final BookServiceImpl bookService;
 
 
-    public UserController(UserService userService, UserServiceImpl userServiceImpl) {
+    public UserController(UserService userService, UserServiceImpl userServiceImpl, BookServiceImpl bookService) {
         this.userService = userService;
         this.userServiceImpl = userServiceImpl;
+        this.bookService = bookService;
     }
 
     @ModelAttribute("user")
@@ -66,6 +69,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     String profile(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
+        model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
         model.addAttribute("title", "Электронная библиотека - профиль пользователя");
         return "profile";
     }
