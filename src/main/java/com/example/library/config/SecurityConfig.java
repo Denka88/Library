@@ -21,16 +21,16 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/registration", "/login", "/webjars/**", "/css/**", "/js/**", "/images/**", "/fonts/**", "/save", "/profile", "/logout")
+                        .requestMatchers("/registration", "/login", "/webjars/**", "/css/**", "/js/**", "/images/**", "/fonts/**", "/save", "/logout")
                         .permitAll()
-                        .requestMatchers("/book/**")
+                        .requestMatchers("/book/**", "/profile/**", "/")
                         .authenticated()
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/profile")
                         .permitAll()
                 )
                 .logout(logout -> logout

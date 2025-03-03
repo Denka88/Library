@@ -8,7 +8,7 @@
 <body>
 <div th:replace="~{/include/header}"></div>
 
-<div class="container">
+<div class="container col-3">
     <h1 class="text-center">Авторизация</h1>
     <hr>
     <form th:action="@{/login}" method="post">
@@ -16,7 +16,7 @@
         <input type="text" class="form-control" id="username" name="username"/>
         <label for="password" class="form-label">Пароль: </label>
         <input type="password" class="form-control" id="password" name="password"/>
-        <button class="btn btn-primary" type="submit">Авторизация</button>
+        <button class="btn btn-primary mt-3" type="submit">Авторизация</button>
     </form>
 </div>
 
