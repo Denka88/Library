@@ -1,5 +1,6 @@
 package com.example.library.dto;
 
+import com.example.library.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -15,7 +16,15 @@ public class BookDto {
     private String author;
     
     @NotEmpty
-    private LocalDateTime year;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getTitle() {
         return title;
@@ -31,13 +40,5 @@ public class BookDto {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public LocalDateTime getYear() {
-        return year;
-    }
-
-    public void setYear(LocalDateTime year) {
-        this.year = year;
     }
 }

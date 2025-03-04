@@ -23,17 +23,19 @@
             <div class="card mt-3">
                 <div class="card-body">
                     <h5 class="card-title">Добавленные книги</h5>
-<!--                    <div th:if="${books != null && !books.isEmpty()}">-->
-<!--                        <ul>-->
-<!--                            <li th:each="book : ${books}">-->
-<!--                                <a th:href="@{/book/detail/{id}(id=${book.id})}" class="nav nav-link"-->
-<!--                                   th:text="${book.title + ' - ' + book.author + ' - ' + book.year + ' г.'}"></a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                    <div th:if="${books == null || books.isEmpty()}">-->
-<!--                        <h6>Моя полка пуста!</h6>-->
-<!--                    </div>-->
+                    <div th:if="${books != null}">
+                        <ul>
+                            <li th:each="book : ${books}">
+                                <!--<a th:href="@{/book/detail/{id}(id=${book.id})}" class="nav nav-link"
+                                   th:text="${book.title + ' - ' + book.author + ' - ' + book.addedAt}"></a>-->
+                                <a th:href="@{/}" class="nav nav-link"
+                                   th:text="${book.title + ' - ' + book.author + ' - ' + book.addedAt}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div th:if="${books == null}">
+                        <h6>Моя полка пуста!</h6>
+                    </div>
                 </div>
             </div>
             <div class="card mt-3">

@@ -18,7 +18,7 @@ public class Book {
     
     private String title;
     private String author;
-    private LocalDateTime year;
+    private LocalDateTime addedAt;
     
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,14 +27,14 @@ public class Book {
 
     public String getFormattedCreatedAt() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy", new Locale("ru"));
-        return year.format(formatter);
+        return addedAt.format(formatter);
     }
 
-    public Book(Long id, String title, String author, LocalDateTime year, User user) {
+    public Book(Long id, String title, String author, LocalDateTime addedAt, User user) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.year = year;
+        this.addedAt = addedAt;
         this.user = user;
     }
 
@@ -65,12 +65,12 @@ public class Book {
         this.author = author;
     }
 
-    public LocalDateTime getYear() {
-        return year;
+    public LocalDateTime getAddedAt() {
+        return addedAt;
     }
 
-    public void setYear(LocalDateTime year) {
-        this.year = year;
+    public void setAddedAt(LocalDateTime year) {
+        this.addedAt = year;
     }
 
     public User getUser() {

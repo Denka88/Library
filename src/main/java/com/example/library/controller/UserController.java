@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private final UserService userService;
-    private final UserServiceImpl userServiceImpl;
     private final BookServiceImpl bookService;
 
 
-    public UserController(UserService userService, UserServiceImpl userServiceImpl, BookServiceImpl bookService) {
+    public UserController(UserService userService, BookServiceImpl bookService) {
         this.userService = userService;
-        this.userServiceImpl = userServiceImpl;
         this.bookService = bookService;
     }
 
@@ -35,23 +33,23 @@ public class UserController {
     }
 
     @GetMapping("/registration")
-    String registration(@ModelAttribute("userDto") UserDto userDto) {
+    String registration(@ModelAttribute("user") UserDto userDto) {
         return "registration";
     }
 
     @PostMapping("/save")
-    String save(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+    String save(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        if (userServiceImpl.isUsernameAvailable(userDto.getUsername())) {
+        if (userService.isUsernameAvailable(userDto.getUsername())) {
             System.out.println("Пользователь есть!");
             bindingResult.rejectValue("username","error.username", "Имя пользователя уже занято!");
             return "registration";
         }
 
-        userServiceImpl.save(userDto);
+        userService.save(userDto);
         return "redirect:/login";
     }
     

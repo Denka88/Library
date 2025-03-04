@@ -1,11 +1,13 @@
 package com.example.library.impl;
 
+import com.example.library.dto.BookDto;
 import com.example.library.model.Book;
 import com.example.library.model.User;
 import com.example.library.repo.BookRepo;
 import com.example.library.service.BookService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,12 +31,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void saveBook(Book book) {
+    public void saveBook(BookDto bookDto) {
         Book newBook = new Book();
-        newBook.setTitle(book.getTitle());
-        newBook.setAuthor(book.getAuthor());
-        newBook.setYear(book.getYear());
-        newBook.setUser(book.getUser());
+        newBook.setTitle(bookDto.getTitle());
+        newBook.setAuthor(bookDto.getAuthor());
+        newBook.setAddedAt(LocalDateTime.now());
+        newBook.setUser(bookDto.getUser());
         bookRepo.save(newBook);
     }
 }

@@ -10,7 +10,7 @@
 <div class="container col-3">
     <h1 class="text-center">Регистрация</h1>
     <hr>
-    <form th:action="@{/save}" th:object="${userDto}" method="post">
+    <form th:action="@{/save}" th:object="${user}" method="post">
         
         <label for="username" class="form-label">Логин: </label>
         <input type="text" class="form-control" id="username" th:field="*{username}">
