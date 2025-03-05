@@ -26,7 +26,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book findByUser(User user) {
+    public List<Book> findByUser(User user) {
         return bookRepo.findByUser(user);
     }
 
@@ -39,4 +39,11 @@ public class BookServiceImpl implements BookService {
         newBook.setUser(bookDto.getUser());
         bookRepo.save(newBook);
     }
+
+    @Override
+    public Book findBookById(Long id) {
+        return bookRepo.findById(id).orElse(null);
+    }
+
+
 }

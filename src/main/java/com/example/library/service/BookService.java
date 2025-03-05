@@ -5,13 +5,16 @@ import com.example.library.model.Book;
 import com.example.library.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
     
     List<Book> findAllBooks();
     
-    Book findByUser(User user);
+    List<Book> findByUser(User user);
     
     void saveBook(BookDto bookDto);
+    
+    Book findBookById(Long id);
     
 }

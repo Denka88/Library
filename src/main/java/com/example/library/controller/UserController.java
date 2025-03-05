@@ -2,7 +2,6 @@ package com.example.library.controller;
 
 import com.example.library.dto.UserDto;
 import com.example.library.impl.BookServiceImpl;
-import com.example.library.impl.UserServiceImpl;
 import com.example.library.service.BookService;
 import com.example.library.service.UserService;
 import jakarta.validation.Valid;
@@ -68,8 +67,8 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     String profile(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
-//        model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
-        model.addAttribute("books", bookService.findAllBooks());
+        model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
+//        model.addAttribute("books", bookService.findAllBooks());
         model.addAttribute("title", "Электронная библиотека - профиль пользователя");
         return "profile";
     }

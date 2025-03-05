@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -24,11 +26,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Пользователя с таким именем не существует: " + username + "!");
         }
+
+        List<SimpleGrantedAuthority> authorities = user.getRoles().stream().map(
+                role -> new SimpleGrantedAuthority("ROLE_" + role.name())).toList();
         
-        return new org.springframework.security.core.userdetails.User(
+        /*return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.name())).toList()
-        );
+        );*/
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+
     }
 }

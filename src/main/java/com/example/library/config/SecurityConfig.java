@@ -23,9 +23,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/registration", "/login", "/webjars/**", "/css/**", "/js/**", "/images/**", "/fonts/**", "/save", "/logout")
                         .permitAll()
-                        .requestMatchers("/book/**", "/profile/**", "/", "/addBook", "/saveBook")
+                        .requestMatchers("/books/book/**", "/profile/**", "/", "/addBook", "/saveBook")
                         .authenticated()
-                        .requestMatchers("/admin/**")
+                        .requestMatchers("/admin/**", "/booksList")
                         .hasRole("ADMIN")
                 )
                 .formLogin(form -> form
