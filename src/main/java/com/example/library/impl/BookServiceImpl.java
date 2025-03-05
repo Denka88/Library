@@ -50,5 +50,18 @@ public class BookServiceImpl implements BookService {
         this.bookRepo.deleteById(id);
     }
 
+    @Override
+    public void editBook(Book book) {
+        Book editedBook = bookRepo.findById(book.getId()).orElse(null);
+        if (editedBook == null) {
+            throw new IllegalArgumentException("Книга не найдена");
+        }
+        editedBook.setTitle(book.getTitle());
+        editedBook.setAuthor(book.getAuthor());
+        editedBook.setAddedAt(LocalDateTime.now());
+        editedBook.setUser(book.getUser());
+        bookRepo.save(editedBook);
+    }
+
 
 }

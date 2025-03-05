@@ -18,4 +18,6 @@ public interface BookService {
     Book findBookById(Long id);
 
     void deleteBook(Long id);
+
+    void editBook(Book book);
 }

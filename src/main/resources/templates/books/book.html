@@ -10,8 +10,34 @@
 
 <div th:replace="~{./include/header}"></div>
 
-<form th:action="@{/books/book/{bookId}/deleteBook(bookId=${book.id})}" method="post" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
-    <button type="submit" class="btn btn-danger">Удалить книгу</button>
-</form>
+<h2 th:text="${'Книга: ' + book.title}" class="text-center"></h2>
+
+<div class="container col-6 mt-5">
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Название: </th>
+            <td th:text="${book.title}"></td>
+        </tr>
+        <tr>
+            <th>Автор книги: </th>
+            <td th:text="${book.author}"></td>
+        </tr>
+        <tr>
+            <th>Добавили в нашу библиотеку: </th>
+            <td th:text="${book.addedAt}"></td>
+        </tr>
+        <tr>
+            <th>Кем добавлена: </th>
+            <td th:text="${book.user.getUsername() + ' - ' + book.user.getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/books/book/{bookId}/deleteBook(bookId=${book.id})}" method="post">
+        <a th:href="@{/books/book/{bookId}/editBook(bookId=${book.id})}" class="btn btn-primary">Изменить</a>
+        <button type="submit" class="btn btn-danger">Удалить книгу</button>
+    </form>
+    
+</div>
 </body>
 </html>

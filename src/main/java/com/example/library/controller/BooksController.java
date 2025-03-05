@@ -59,10 +59,4 @@ public class BooksController {
         return "booksList";
     }
 
-    @PostMapping("deleteBook")
-    public String deleteBook(@ModelAttribute("book") Book book){
-        this.bookService.deleteBook(book.getId());
-        return "redirect:/booksList";
-    }
-
 }

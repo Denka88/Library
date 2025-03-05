@@ -17,9 +17,11 @@
         <tr>
             <th>ID</th>
             <th>Название</th>
+            <th>Автор</th>
             <th>Дата добавления</th>
             <th>Пользователь</th>
-            <th>Действия</th>
+            <th>Изменение</th>
+            <th>Удаление</th>
         </tr>
         </thead>
         <tbody>
@@ -28,8 +30,12 @@
             <td>
                 <a th:href="@{/books/book/{id}(id=${book.id})}" th:text="${book.title}"></a>
             </td>
+            <td th:text="${book.author}"></td>
             <td th:text="${book.addedAt}"></td>
             <td th:text="${book.user.getUsername()}"></td>
+            <td>
+                <a th:href="@{/books/book/{bookId}/editBook(bookId=${book.id})}" class="btn btn-primary">Изменить</a>
+            </td>
             <td>
                 <form th:action="@{/books/book/{bookId}/deleteBook(bookId=${book.id})}" method="post">
                     <button type="submit" class="btn btn-danger">Удалить книгу</button>

@@ -34,10 +34,30 @@ public class BookController {
     }
     
     @PostMapping("/deleteBook")
-    public String deleteBook(@ModelAttribute("book") Book book){
+    public String deleteBook(@ModelAttribute("book") Book book, @AuthenticationPrincipal User user){
         this.bookService.deleteBook(book.getId());
-        return "redirect:/booksList";
+        if (user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+            return "redirect:/booksList";
+        }
+        else if (user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))){
+            return "redirect:/profile";
+        }
+        else {
+            return "redirect:/";
+        }
     }
     
+    @PostMapping("/editBook")
+    public String editBook(@ModelAttribute("book") Book book){
+        this.bookService.editBook(book);
+        return "redirect:/books/book/" + book.getId();
+    }
+    
+    @GetMapping("/editBook")
+    public String getEditBook(@ModelAttribute("book") Book book, @AuthenticationPrincipal User user, Model model){
+        model.addAttribute("user", userService.findUser(user.getUsername()));
+        model.addAttribute("book", bookService.findBookById(book.getId()));
+        return "/editBook";
+    }
     
 }
