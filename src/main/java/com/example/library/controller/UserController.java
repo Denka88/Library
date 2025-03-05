@@ -3,6 +3,7 @@ package com.example.library.controller;
 import com.example.library.dto.UserDto;
 import com.example.library.impl.BookServiceImpl;
 import com.example.library.impl.UserServiceImpl;
+import com.example.library.service.BookService;
 import com.example.library.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private final UserService userService;
-    private final BookServiceImpl bookService;
+    private final BookService bookService;
 
 
     public UserController(UserService userService, BookServiceImpl bookService) {
@@ -67,7 +68,8 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     String profile(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
-        model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
+//        model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
+        model.addAttribute("books", bookService.findAllBooks());
         model.addAttribute("title", "Электронная библиотека - профиль пользователя");
         return "profile";
     }

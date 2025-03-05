@@ -40,7 +40,7 @@ public class BookController {
     }
     
     @PostMapping("/saveBook")
-    String saveBook(@ModelAttribute("book") BookDto bookDto, @AuthenticationPrincipal User user, BindingResult bindingResult, Principal principal) {
+    String saveBook(@ModelAttribute("book") BookDto bookDto, @AuthenticationPrincipal User user, BindingResult bindingResult) {
         
         bookDto.setUser(userService.findUser(user.getUsername()));
         

@@ -9,6 +9,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/addBook">Добавить книгу</a>
                 </li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a class="nav-link" href="/">Список книг</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav me-3" sec:authorize="isAuthenticated()">
