@@ -9,5 +9,9 @@
 <body>
 
 <div th:replace="~{./include/header}"></div>
+
+<form th:action="@{/books/book/{bookId}/deleteBook(bookId=${book.id})}" method="post" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
+    <button type="submit" class="btn btn-danger">Удалить книгу</button>
+</form>
 </body>
 </html>

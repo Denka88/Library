@@ -8,10 +8,7 @@ import com.example.library.service.BookService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("books/book/{bookId:\\d+}")
@@ -34,6 +31,12 @@ public class BookController {
     public String getBook(@AuthenticationPrincipal User user, Model model){
         model.addAttribute("user", userService.findUser(user.getUsername()));
         return "/books/book";
+    }
+    
+    @PostMapping("/deleteBook")
+    public String deleteBook(@ModelAttribute("book") Book book){
+        this.bookService.deleteBook(book.getId());
+        return "redirect:/booksList";
     }
     
     

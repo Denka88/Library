@@ -2,6 +2,7 @@ package com.example.library.controller;
 
 
 import com.example.library.dto.BookDto;
+import com.example.library.model.Book;
 import org.springframework.security.core.userdetails.User;
 import com.example.library.service.BookService;
 import com.example.library.service.UserService;
@@ -56,6 +57,12 @@ public class BooksController {
         model.addAttribute("user", userService.findUser(user.getUsername()));
         model.addAttribute("books", bookService.findAllBooks());
         return "booksList";
+    }
+
+    @PostMapping("deleteBook")
+    public String deleteBook(@ModelAttribute("book") Book book){
+        this.bookService.deleteBook(book.getId());
+        return "redirect:/booksList";
     }
 
 }

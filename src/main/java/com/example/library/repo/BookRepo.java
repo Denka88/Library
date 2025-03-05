@@ -10,4 +10,6 @@ public interface BookRepo extends JpaRepository<Book, Long> {
     
     List<Book> findByUser(User user);
     
+    void deleteById(Long id);
+    
 }
