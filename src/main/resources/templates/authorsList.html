@@ -18,11 +18,17 @@
             <th>ID</th>
             <th>Имя</th>
             <th>Фамилия</th>
+            <th>Изменить</th>
+            <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="author : ${authors}">
-
+            <td th:text="${author.id}"></td>
+            <td th:text="${author.name}"></td>
+            <td th:text="${author.surname}"></td>
+            <td>Не-а</td>
+            <td>Не-а</td>
 
         </tr>
         </tbody>

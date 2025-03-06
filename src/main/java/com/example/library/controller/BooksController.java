@@ -2,7 +2,8 @@ package com.example.library.controller;
 
 
 import com.example.library.dto.BookDto;
-import com.example.library.model.Book;
+import com.example.library.model.Author;
+import com.example.library.service.AuthorService;
 import org.springframework.security.core.userdetails.User;
 import com.example.library.service.BookService;
 import com.example.library.service.UserService;
@@ -19,10 +20,12 @@ public class BooksController {
 
     private final BookService bookService;
     private final UserService userService;
+    private final AuthorService authorService;
 
-    public BooksController(BookService bookService, UserService userService) {
+    public BooksController(BookService bookService, UserService userService, AuthorService authorService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.authorService = authorService;
     }
     
     @GetMapping("/addBook")
@@ -35,6 +38,7 @@ public class BooksController {
         }
         model.addAttribute("books", bookService.findAllBooks());
         model.addAttribute("book", new BookDto());
+        model.addAttribute("authors", authorService.findAllAuthors());
         return "addBook";
     }
     

@@ -27,7 +27,7 @@
                         <ul>
                             <li th:each="book : ${books}">
                                 <a th:href="@{/books/book/{id}(id=${book.id})}" class="nav nav-link"
-                                   th:text="${book.title + ' - ' + book.author + ' - ' + book.addedAt + ' - ' + book.user.getUsername()}"></a>
+                                   th:text="${book.title + ' - ' + book.author.getName() + ' - ' + book.addedAt + ' - ' + book.user.getUsername()}"></a>
                             </li>
                         </ul>
                     </div>

@@ -15,10 +15,12 @@
     <hr>
     <form th:action="@{/saveBook}" th:object="${book}" method="post">
         <label for="title" class="form-label">Название:</label>
-            <input id="title" th:field="*{title}" class="form-control">
+        <input id="title" th:field="*{title}" class="form-control">
         <br>
         <label for="author" class="form-label">Автор:</label>
-            <input id="author" th:field="*{author}" class="form-control">
+        <select id="author" th:field="*{author}" class="form-control">
+            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">Выберите автора</option>
+        </select>
         <br>
         <button type="submit" class="btn btn-primary">Добавить</button>
         <button type="reset" class="btn btn-secondary">Очистить</button>

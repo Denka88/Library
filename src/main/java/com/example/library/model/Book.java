@@ -84,4 +84,11 @@ public class Book {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "user=" + user.getName() +
+                '}';
+    }
 }

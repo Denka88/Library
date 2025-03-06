@@ -7,9 +7,5 @@ import java.util.List;
 
 public interface AuthorRepo extends JpaRepository<Author, Long> {
 
-    Author findById(Long id);
 
-    List<Author> findAll();
-
-    void save(Author newAuthor);
 }

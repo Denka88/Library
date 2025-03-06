@@ -30,7 +30,7 @@
             <td>
                 <a th:href="@{/books/book/{id}(id=${book.id})}" th:text="${book.title}"></a>
             </td>
-            <td th:text="${book.author}"></td>
+            <td th:text="${book.author.getName()}"></td>
             <td th:text="${book.addedAt}"></td>
             <td th:text="${book.user.getUsername()}"></td>
             <td>
