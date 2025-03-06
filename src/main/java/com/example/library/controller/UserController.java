@@ -1,81 +1,71 @@
 package com.example.library.controller;
 
-import com.example.library.dto.UserDto;
-import com.example.library.impl.BookServiceImpl;
+
+import com.example.library.model.Book;
+import com.example.library.model.User;
+import com.example.library.repo.BookRepo;
 import com.example.library.service.BookService;
 import com.example.library.service.UserService;
-import jakarta.validation.Valid;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("users/user/{userId:\\d+}")
 public class UserController {
-
+    
     private final UserService userService;
     private final BookService bookService;
+    private final BookRepo bookRepo;
 
-
-    public UserController(UserService userService, BookServiceImpl bookService) {
+    public UserController(UserService userService, BookService bookService, BookRepo bookRepo) {
         this.userService = userService;
         this.bookService = bookService;
-    }
-
-    @ModelAttribute("user")
-    public UserDto user() {
-        return new UserDto();
-    }
-
-    @GetMapping("/registration")
-    String registration(@ModelAttribute("user") UserDto userDto) {
-        return "registration";
-    }
-
-    @PostMapping("/save")
-    String save(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-
-        if (userService.isUsernameAvailable(userDto.getUsername())) {
-            System.out.println("Пользователь есть!");
-            bindingResult.rejectValue("username","error.username", "Имя пользователя уже занято!");
-            return "registration";
-        }
-
-        userService.save(userDto);
-        return "redirect:/login";
+        this.bookRepo = bookRepo;
     }
     
-    @GetMapping("/")
-    String index(@AuthenticationPrincipal User user, Model model) {
-        if (user != null) {
-            model.addAttribute("user", userService.findUser(user.getUsername()));
-        } else {
-            model.addAttribute("user", null);
-        }
-        return "index";
-    }
-
-    @GetMapping("/profile")
-    @PreAuthorize("isAuthenticated()")
-    String profile(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", userService.findUser(user.getUsername()));
-        model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
-        model.addAttribute("title", "Электронная библиотека - профиль пользователя");
-        return "profile";
+    @ModelAttribute("account")
+    public User getUser(@PathVariable("userId") long userId) {
+        return this.userService.findById(userId);
     }
     
-    @GetMapping("/usersList")
-    String list(@AuthenticationPrincipal User user, Model model) {
+    @GetMapping
+    public String getUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user, Model model, @PathVariable long userId) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
-        model.addAttribute("users", userService.findAllUsers());
-        return "usersList";
+        model.addAttribute("books", bookService.findByUser(userService.findById(userId)));
+        model.addAttribute("account", userService.findById(userId));
+        return "/users/user";
+    }
+    
+    @PostMapping("/deleteUser")
+    public String deleteUser(User user, @PathVariable("userId") long userId) {
+
+        List<Book> books = bookService.findByUser(userService.findById(userId)); 
+        
+        for (Book book : books) {
+            book.setUser(null);
+            bookRepo.save(book);
+        }
+        
+        this.userService.deleteUser(userId);
+        
+        return "redirect:/usersList";
+    }
+    
+    @PostMapping("/editUser")
+    public String editUser(@ModelAttribute("account") User user) {
+        this.userService.editUser(user);
+        return "redirect:/usersList";
+    }
+    
+    @GetMapping("/editUser")
+    public String editUser(@ModelAttribute("account") User account, @AuthenticationPrincipal org.springframework.security.core.userdetails.User user, Model model) {
+        model.addAttribute("user", userService.findUser(user.getUsername()));
+        model.addAttribute("account", userService.findById(account.getId()));
+        
+        return "/editUser";
     }
 }

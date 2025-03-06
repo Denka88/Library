@@ -37,7 +37,7 @@ public class BookController {
     }
     
     @PostMapping("/deleteBook")
-    public String deleteBook(@ModelAttribute("book") Book book, @AuthenticationPrincipal User user){
+    public String deleteBook(Book book, @AuthenticationPrincipal User user){
         this.bookService.deleteBook(book.getId());
         if (user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
             return "redirect:/booksList";
@@ -51,7 +51,7 @@ public class BookController {
     }
     
     @PostMapping("/editBook")
-    public String editBook(@ModelAttribute("book") Book book){
+    public String editBook(Book book){
         this.bookService.editBook(book);
         return "redirect:/books/book/" + book.getId();
     }

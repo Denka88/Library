@@ -46,4 +46,27 @@ public class UserServiceImpl implements UserService {
     public boolean isUsernameAvailable(String username) {
         return userRepo.existsByUsername(username);
     }
+
+    @Override
+    public User findById(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        this.userRepo.deleteById(id);
+    }
+
+    @Override
+    public void editUser(User user) {
+        User editedUser = userRepo.findById(user.getId()).orElse(null);
+        if(editedUser == null) {
+            throw new RuntimeException("Пользователь не найден");
+        }
+        editedUser.setUsername(user.getUsername());
+        editedUser.setPassword(encoder.encode(user.getPassword()));
+        editedUser.setName(user.getName() + " " + user.getSurname());
+        editedUser.setRoles(user.getRoles());
+        userRepo.save(editedUser);
+    }
 }

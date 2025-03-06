@@ -15,4 +15,10 @@ public interface UserService {
     List<User> findAllUsers();
 
     boolean isUsernameAvailable(String username);
+
+    User findById(Long id);
+
+    void deleteUser(Long id);
+
+    void editUser(User user);
 }

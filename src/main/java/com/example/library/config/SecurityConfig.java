@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/profile/**", "/", "/addBook", "/saveBook", "/books/**", "/saveAuthor", "/addAuthor", "/authorsList", "/authors/**")
                         .authenticated()
-                        .requestMatchers("/admin/**", "/booksList", "/authorsList", "/deleteAuthor", "/usersList")
+                        .requestMatchers("/admin/**", "/booksList", "/authorsList", "/deleteAuthor", "/usersList", "/users/**")
                         .hasRole("ADMIN")
                 )
                 .formLogin(form -> form

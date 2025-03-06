@@ -29,10 +29,18 @@
         <tbody>
         <tr th:each="userElem : ${users}">
             <td th:text="${userElem.id}"></td>
-            <td th:text="${userElem.username}"></td>
+            <td>
+                <a th:text="${userElem.username}" th:href="@{/users/user/{id}(id=${userElem.id})}"></a>
+            </td>
             <td th:text="${userElem.name}"></td>
-            <td>Не-а</td>
-            <td>Не-а</td>
+            <td>
+                <a th:href="@{/users/user/{accountId}/editUser(accountId=${userElem.id})}" class="btn btn-primary">Изменить</a>
+            </td>
+            <td>
+                <form th:action="@{/users/user/{accountId}/deleteUser(accountId=${userElem.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Удалить пользователя</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

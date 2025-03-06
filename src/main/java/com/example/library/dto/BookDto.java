@@ -16,7 +16,6 @@ public class BookDto {
     @NotEmpty
     private Author author;
     
-    @NotEmpty
     private User user;
 
     public User getUser() {
