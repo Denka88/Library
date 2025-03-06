@@ -1,56 +1,64 @@
 package com.example.library.controller;
 
-import com.example.library.dto.AuthorDto;
 import com.example.library.model.Author;
+import com.example.library.model.Book;
 import com.example.library.service.AuthorService;
 import com.example.library.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("authors/author/{authorId:\\d+}")
 public class AuthorController {
-
+    
     private final AuthorService authorService;
     private final UserService userService;
-
-    @ModelAttribute("author")
-    private AuthorDto authorDto() {
-        return new AuthorDto();
-    }
 
     public AuthorController(AuthorService authorService, UserService userService) {
         this.authorService = authorService;
         this.userService = userService;
     }
 
-    @GetMapping("/addAuthor")
-    public String addAuthor(@AuthenticationPrincipal User user, Model model) {
-        if (user != null){
-            model.addAttribute("user", userService.findUser(user.getUsername()));
-        }
-        else {
-            model.addAttribute("user", null);
-        }
-        model.addAttribute("authors", authorService.findAllAuthors());
-        return "addAuthor";
+    @ModelAttribute("author")
+    public Author author(@PathVariable("authorId") long authorId) {
+        return this.authorService.findAuthorById(authorId);
     }
 
-    @PostMapping("/saveAuthor")
-    public String saveAuthor(@ModelAttribute("author") AuthorDto authorDto) {
-        authorService.saveAuthor(authorDto);
-        return "redirect:/profile";
-    }
-
-    @GetMapping("/authorsList")
-    public String booksList(@AuthenticationPrincipal User user, Model model) {
+    @GetMapping
+    public String getAuthor(@AuthenticationPrincipal User user, Model model){
         model.addAttribute("user", userService.findUser(user.getUsername()));
-        model.addAttribute("authors", authorService.findAllAuthors());
-        return "authorsList";
+        return "/authors/author";
     }
 
+    @PostMapping("/deleteAuthor")
+    public String deleteAuthor(@ModelAttribute("author") Author author, RedirectAttributes redirectAttributes) {
+        // Проверяем, есть ли у автора книги
+        if (authorService.hasBooks(author.getId())) {
+            // Если книги есть, добавляем сообщение об ошибке и перенаправляем обратно
+            redirectAttributes.addFlashAttribute("errorMessage", "Невозможно удалить автора, так как у него есть связанные книги.");
+            return "redirect:/authorsList"; // Перенаправляем на страницу со списком авторов
+        }
+
+        // Если книг нет, удаляем автора
+        authorService.deleteAuthor(author.getId());
+        return "redirect:/authorsList";
+    }
+
+    @PostMapping("/editAuthor")
+    public String editBook(@ModelAttribute("author") Author author){
+        this.authorService.editAuthor(author);
+        return "redirect:/authors/author/" + author.getId();
+    }
+
+
+    @GetMapping("/editAuthor")
+    public String getEditAuthor(@ModelAttribute("author") Author author, @AuthenticationPrincipal User user, Model model){
+        model.addAttribute("user", userService.findUser(user.getUsername()));
+        model.addAttribute("author", authorService.findAuthorById(author.getId()));
+        return "/editAuthor";
+    }
 }

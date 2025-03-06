@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface AuthorRepo extends JpaRepository<Author, Long> {
 
-
+    void deleteById(Long id);
+    
 }

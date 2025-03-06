@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 
 <div th:replace="~{include/header}"></div>
 
-<h2 class="text-center">Список авторов в библиотеке</h2>
+<h2 class="text-center">Список пользователей</h2>
 <div class="container col-10">
     <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
         <span th:text="${errorMessage}"></span>
@@ -20,28 +20,19 @@
         <thead>
         <tr>
             <th>ID</th>
+            <th>Псевдоним</th>
             <th>Имя</th>
-            <th>Фамилия</th>
             <th>Изменить</th>
             <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="author : ${authors}">
-            <td>
-                <a th:text="${author.id}" th:href="@{authors/author/{id}(id=${author.id})}"></a>
-            </td>
-            <td th:text="${author.name}"></td>
-            <td th:text="${author.surname}"></td>
-            <td>
-                <a th:href="@{/authors/author/{authorId}/editAuthor(authorId=${author.id})}" class="btn btn-primary">Изменить</a>
-            </td>
-            <td>
-                <form th:action="@{/authors/author/{authorId}/deleteAuthor(authorId=${author.id})}" method="post">
-                    <button type="submit" class="btn btn-danger">Удалить автора</button>
-                </form>
-            </td>
-
+        <tr th:each="userElem : ${users}">
+            <td th:text="${userElem.id}"></td>
+            <td th:text="${userElem.username}"></td>
+            <td th:text="${userElem.name}"></td>
+            <td>Не-а</td>
+            <td>Не-а</td>
         </tr>
         </tbody>
     </table>

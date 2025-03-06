@@ -21,7 +21,9 @@
         </tr>
         <tr>
             <th>Автор книги: </th>
-            <td th:text="${book.author.getName()}"></td>
+            <td>
+                <a th:href="@{../../authors/author/{id}(id=${book.author.id})}" th:text="${book.author.getName() + ' ' + book.author.getSurname()}"></a>
+            </td>
         </tr>
         <tr>
             <th>Добавили в нашу библиотеку: </th>

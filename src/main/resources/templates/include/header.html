@@ -15,6 +15,9 @@
                 <li class="nav-item" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
                     <a class="nav-link" href="/authorsList">Список авторов</a>
                 </li>
+                <li class="nav-item" th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
+                    <a class="nav-link" href="/usersList">Список пользователей</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav me-3" sec:authorize="isAuthenticated()">

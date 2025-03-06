@@ -13,4 +13,9 @@ public interface AuthorService {
 
     Author findAuthorById(Long id);
 
+    void deleteAuthor(Long id);
+
+    void editAuthor(Author author);
+
+    boolean hasBooks(Long id);
 }

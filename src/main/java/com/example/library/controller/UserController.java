@@ -71,4 +71,11 @@ public class UserController {
         model.addAttribute("title", "Электронная библиотека - профиль пользователя");
         return "profile";
     }
+    
+    @GetMapping("/usersList")
+    String list(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", userService.findUser(user.getUsername()));
+        model.addAttribute("users", userService.findAllUsers());
+        return "usersList";
+    }
 }

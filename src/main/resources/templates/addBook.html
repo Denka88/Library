@@ -19,11 +19,12 @@
         <br>
         <label for="author" class="form-label">Автор:</label>
         <select id="author" th:field="*{author}" class="form-control">
-            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">Выберите автора</option>
+            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.getName() + ' ' + author.getSurname()}">Выберите автора</option>
         </select>
         <br>
         <button type="submit" class="btn btn-primary">Добавить</button>
         <button type="reset" class="btn btn-secondary">Очистить</button>
+        <span>Нет автора?<a href="/addAuthor">Добавить</a></span>
     </form>
 </div>
 </body>

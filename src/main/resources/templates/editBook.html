@@ -18,10 +18,12 @@
         <input id="title" th:field="*{title}" class="form-control">
         <br>
         <label for="author" class="form-label">Новый автор:</label>
-        <input id="author" th:field="*{author}" class="form-control">
+        <select id="author" th:field="*{author}" class="form-control">
+            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.getName() + ' ' + author.getSurname()}">Выберите автора</option>
+        </select>
         <br>
         <button type="submit" class="btn btn-primary">Изменить</button>
-        <button type="reset" class="btn btn-secondary" onclick="onBack()">Отмена</button>
+        <a class="btn btn-secondary" href="/">Отмена</a>
     </form>
 </div>
 </body>

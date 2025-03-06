@@ -2,6 +2,7 @@ package com.example.library.controller;
 
 
 import com.example.library.model.Book;
+import com.example.library.service.AuthorService;
 import com.example.library.service.UserService;
 import org.springframework.security.core.userdetails.User;
 import com.example.library.service.BookService;
@@ -16,10 +17,12 @@ public class BookController {
     
     private final UserService userService;
     private final BookService bookService;
+    private final AuthorService authorService;
 
-    public BookController(UserService userService, BookService bookService) {
+    public BookController(UserService userService, BookService bookService, AuthorService authorService) {
         this.userService = userService;
         this.bookService = bookService;
+        this.authorService = authorService;
     }
     
     @ModelAttribute("book")
@@ -57,6 +60,7 @@ public class BookController {
     public String getEditBook(@ModelAttribute("book") Book book, @AuthenticationPrincipal User user, Model model){
         model.addAttribute("user", userService.findUser(user.getUsername()));
         model.addAttribute("book", bookService.findBookById(book.getId()));
+        model.addAttribute("authors", authorService.findAllAuthors());
         return "/editBook";
     }
     
