@@ -1,5 +1,6 @@
 package com.example.library.dto;
 
+import com.example.library.model.Author;
 import com.example.library.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -13,7 +14,7 @@ public class BookDto {
     private String title;
     
     @NotEmpty
-    private String author;
+    private Author author;
     
     @NotEmpty
     private User user;
@@ -34,11 +35,11 @@ public class BookDto {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 }

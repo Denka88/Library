@@ -34,7 +34,7 @@
         </tbody>
     </table>
     <form th:action="@{/books/book/{bookId}/deleteBook(bookId=${book.id})}" method="post">
-        <a th:href="@{/books/book/{bookId}/editBook(bookId=${book.id})}" class="btn btn-primary">Изменить</a>
+        <a th:href="@{/books/book/{bookId}/editBook(bookId=${book.id})}" class="btn btn-primary">Изменить книгу</a>
         <button type="submit" class="btn btn-danger">Удалить книгу</button>
     </form>
     

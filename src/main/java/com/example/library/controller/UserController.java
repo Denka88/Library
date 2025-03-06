@@ -68,7 +68,6 @@ public class UserController {
     String profile(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", userService.findUser(user.getUsername()));
         model.addAttribute("books", bookService.findByUser(userService.findUser(user.getUsername())));
-//        model.addAttribute("books", bookService.findAllBooks());
         model.addAttribute("title", "Электронная библиотека - профиль пользователя");
         return "profile";
     }
