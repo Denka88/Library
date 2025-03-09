@@ -2,6 +2,8 @@ package com.example.library.service;
 
 import com.example.library.dto.AuthorDto;
 import com.example.library.model.Author;
+import com.example.library.model.Book;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 

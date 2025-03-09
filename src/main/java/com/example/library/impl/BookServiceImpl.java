@@ -6,9 +6,16 @@ import com.example.library.model.User;
 import com.example.library.repo.BookRepo;
 import com.example.library.repo.UserRepo;
 import com.example.library.service.BookService;
+import org.hibernate.type.ListType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -62,6 +69,28 @@ public class BookServiceImpl implements BookService {
         editedBook.setAddedAt(LocalDateTime.now());
         editedBook.setUser(book.getUser());
         bookRepo.save(editedBook);
+    }
+    
+    @Override
+    public Page<Book> findPaginated(Pageable pageable) {
+        
+        final List<Book> books = bookRepo.findAll();
+        
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Book> list;
+        
+        if (books.size() < startItem) {
+            list = Collections.emptyList();
+        }
+        else {
+            int toIndex = Math.min(startItem + pageSize, books.size());
+            list = books.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<Book>(list, PageRequest.of(currentPage, pageSize), books.size());
+        
     }
 
 
