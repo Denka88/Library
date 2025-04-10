@@ -22,7 +22,7 @@ public class UsersController {
     private final BookService bookService;
 
 
-    public UsersController(UserService userService, BookServiceImpl bookService) {
+    public UsersController(UserService userService, BookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }
