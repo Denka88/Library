@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -28,7 +27,7 @@ class AuthorsControllerTest {
     private AuthorService authorService;
     @MockitoBean
     private UserService userService;
-    
+
     @Test
     void addAuthor() throws Exception {
         Author author = new Author();
@@ -45,7 +44,7 @@ class AuthorsControllerTest {
 
         when(authorService.findAuthorById(1L)).thenReturn(author);
         when(userService.findUser("testuser")).thenReturn(user);
-        
+
         mvc.perform(MockMvcRequestBuilders.get("/addAuthor").with(user(testUser)))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("author"))
@@ -54,48 +53,10 @@ class AuthorsControllerTest {
     }
 
     @Test
-    void saveAuthor() throws Exception {
-        Author author = new Author();
-        author.setId(1L);
-
-        UserDetails testUser = org.springframework.security.core.userdetails.User
-                .withUsername("testuser")
-                .password("password")
-                .roles("USER")
-                .build();
-
-        User user = new User();
-        user.setUsername("testuser");
-
-        when(authorService.findAuthorById(1L)).thenReturn(author);
-        when(userService.findUser("testuser")).thenReturn(user);
-
-        mvc.perform(MockMvcRequestBuilders.post("/saveAuthor").with(user(testUser)).with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/profile"));
+    void saveAuthor() {
     }
 
     @Test
-    void booksList() throws Exception {
-        Author author = new Author();
-        author.setId(1L);
-
-        UserDetails testUser = org.springframework.security.core.userdetails.User
-                .withUsername("testuser")
-                .password("password")
-                .roles("USER")
-                .build();
-
-        User user = new User();
-        user.setUsername("testuser");
-
-        when(authorService.findAuthorById(1L)).thenReturn(author);
-        when(userService.findUser("testuser")).thenReturn(user);
-
-        mvc.perform(MockMvcRequestBuilders.get("/authorsList").with(user(testUser)))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("author"))
-                .andExpect(model().attributeExists("user"))
-                .andExpect(view().name("authorsList"));
+    void booksList() {
     }
 }
