@@ -1,12 +1,14 @@
 package com.example.library.controller;
 
 
+import com.example.library.config.SecurityConfig;
 import com.example.library.model.User;
 import com.example.library.service.BookService;
 import com.example.library.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,6 +21,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UsersController.class)
+@Import(SecurityConfig.class)
 class UsersControllerTest {
 
     @Autowired
@@ -31,7 +34,6 @@ class UsersControllerTest {
     private BookService bookService;
     
     @Test
-    @WithAnonymousUser
     void registration() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/registration"))
                 .andExpect(status().isOk())
@@ -39,7 +41,6 @@ class UsersControllerTest {
     }
 
     @Test
-    @WithAnonymousUser
     void save() throws Exception {
         User user = new User();
         user.setId(1L);
@@ -97,7 +98,7 @@ class UsersControllerTest {
         UserDetails testUser = org.springframework.security.core.userdetails.User
                 .withUsername("testuser")
                 .password("password")
-                .roles("USER")
+                .roles("ADMIN")
                 .build();
 
         User user = new User();
